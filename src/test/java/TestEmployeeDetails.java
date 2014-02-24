@@ -1,28 +1,28 @@
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+@Test
 public class TestEmployeeDetails {
-  EmpBusinessLogic empBusinessLogic = new EmpBusinessLogic();
-  EmployeeDetails employee = new EmployeeDetails();
+  private EmployeeDetails employee;
 
-  @Test
-  public void testCalculateAppriasal() {
-    employee.setName("Rajeev");
-    employee.setAge(25);
-    employee.setMonthlySalary(8000);
-    double appraisal = empBusinessLogic
-        .calculateAppraisal(employee);
-    Assert.assertEquals(500, appraisal, 0.0, "500");
+  @BeforeMethod
+  public void setUp(){
+    employee = new EmployeeDetails();
+    System.out.println(employee.getCount());
   }
 
-  // test to check yearly salary
-  @Test
-  public void testCalculateYearlySalary() {
-    employee.setName("Rajeev");
-    employee.setAge(25);
+  public void testCalculateAppraisal() {
     employee.setMonthlySalary(8000);
-    double salary = empBusinessLogic
-        .calculateYearlySalary(employee);
-    Assert.assertEquals(96000, salary, 0.0, "8000");
+    double appraisal = EmpBusinessLogic.calculateAppraisal(employee);
+    Assert.assertEquals(appraisal, 500D, "Expected 500, but got " + appraisal);
+    EmployeeDetails newobj = new EmployeeDetails();
+    System.out.println(newobj.getCount());
+  }
+
+  public void testCalculateYearlySalary() {
+    employee.setMonthlySalary(8000);
+    double salary = EmpBusinessLogic.calculateYearlySalary(employee);
+    Assert.assertEquals(salary, 96000D, "8000");
   }
 }

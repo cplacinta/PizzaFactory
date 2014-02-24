@@ -1,8 +1,14 @@
 public class EmployeeDetails {
 
+  private static int counter = 0;
+
   private String name;
   private double monthlySalary;
   private int age;
+
+  public EmployeeDetails (){
+    this.counter++;
+  }
 
   /**
    * @return the name
@@ -39,5 +45,9 @@ public class EmployeeDetails {
    */
   public void setAge(int age) {
     this.age = age;
+  }
+
+  public int getCount() {
+    return counter;
   }
 }
