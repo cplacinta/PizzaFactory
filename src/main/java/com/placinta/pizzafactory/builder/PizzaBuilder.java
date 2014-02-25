@@ -12,7 +12,6 @@ public class PizzaBuilder {
   private int cheeseCounter;
   private int meatCounter;
   private int vegetablesCounter;
-  private double price = 10;
 
   public Pizza build() {
     return new Pizza(toppings);
@@ -36,17 +35,13 @@ public class PizzaBuilder {
     }
   }
 
-  public double getPrice() {
-    for (Topping topping : toppings) {
-      price += topping.getPrice();
-    }
-    return price;
-  }
-
   private void checkCounter(int counter, int maxCount, String message) {
     if (counter > maxCount) {
       throw new InvalidToppingCountException(message);
     }
   }
 
+  public Set<Topping> getToppings() {
+    return toppings;
+  }
 }

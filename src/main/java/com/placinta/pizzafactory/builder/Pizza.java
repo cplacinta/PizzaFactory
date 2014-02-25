@@ -12,4 +12,7 @@ public class Pizza {
     this.toppings = toppings;
   }
 
+  public Set<Topping> getToppings() {
+    return toppings;
+  }
 }
