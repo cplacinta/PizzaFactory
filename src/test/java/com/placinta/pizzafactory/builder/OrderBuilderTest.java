@@ -17,6 +17,8 @@ public class OrderBuilderTest {
   public void testBasicOrderForGeorge() {
     OrderBuilder orderBuilder = new OrderBuilder();
     orderBuilder.setName("George");
+    PizzaBuilder pizzaBuilder = new PizzaBuilder();
+    orderBuilder.setPizzaBuilder(pizzaBuilder);
     Order order = orderBuilder.build();
 
     Assert.assertEquals(order.getName(), "George", NAME_DIFFERENT_THAN_EXPECTED);
@@ -25,6 +27,8 @@ public class OrderBuilderTest {
   public void testBasicOrderForIon() {
     OrderBuilder orderBuilder = new OrderBuilder();
     orderBuilder.setName("Ion");
+    PizzaBuilder pizzaBuilder = new PizzaBuilder();
+    orderBuilder.setPizzaBuilder(pizzaBuilder);
     Order order = orderBuilder.build();
 
     Assert.assertEquals(order.getName(), "Ion", NAME_DIFFERENT_THAN_EXPECTED);
@@ -33,6 +37,8 @@ public class OrderBuilderTest {
   @Test(expectedExceptions = InvalidNameException.class, expectedExceptionsMessageRegExp = "Invalid name provided")
   public void testBasicOrderWithNoName() {
     OrderBuilder orderBuilder = new OrderBuilder();
+    PizzaBuilder pizzaBuilder = new PizzaBuilder();
+    orderBuilder.setPizzaBuilder(pizzaBuilder);
     Order order = orderBuilder.build();
 
     Assert.assertEquals(order.getName(), "Ion", NAME_DIFFERENT_THAN_EXPECTED);
@@ -41,6 +47,8 @@ public class OrderBuilderTest {
   public void testOrderWithNameAndPizza() {
     OrderBuilder orderBuilder = new OrderBuilder();
     orderBuilder.setName("Ion");
+    PizzaBuilder pizzaBuilder = new PizzaBuilder();
+    orderBuilder.setPizzaBuilder(pizzaBuilder);
     Order order = orderBuilder.build();
 
     Assert.assertEquals(order.getName(), "Ion", NAME_DIFFERENT_THAN_EXPECTED);

@@ -15,9 +15,8 @@ public class PizzaBuilderTest {
 
   public void testBuildBasicPizza() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Pizza pizza = pizzaBuilder.build();
 
-    Assert.assertEquals(pizza.getPrice(), 10.0D, PRICE_DIFFERENT_THAN_EXPECTED);
+    Assert.assertEquals(pizzaBuilder.getPrice(), 10.0D, PRICE_DIFFERENT_THAN_EXPECTED);
   }
 
   public void testBuildPizzaWithCheese() {
@@ -28,9 +27,8 @@ public class PizzaBuilderTest {
     cheeses.add(Topping.MOZZARELLA);
 
     pizzaBuilder.setToppings(cheeses);
-    Pizza pizza = pizzaBuilder.build();
 
-    Assert.assertEquals(pizza.getPrice(), 160.0D, PRICE_DIFFERENT_THAN_EXPECTED);
+    Assert.assertEquals(pizzaBuilder.getPrice(), 160.0D, PRICE_DIFFERENT_THAN_EXPECTED);
   }
 
   @Test(expectedExceptions = InvalidToppingCountException.class, expectedExceptionsMessageRegExp = "Too much cheese")
@@ -52,9 +50,8 @@ public class PizzaBuilderTest {
     meats.add(Topping.HAM);
 
     pizzaBuilder.setToppings(meats);
-    Pizza pizza = pizzaBuilder.build();
 
-    Assert.assertEquals(pizza.getPrice(), 225.0D, PRICE_DIFFERENT_THAN_EXPECTED);
+    Assert.assertEquals(pizzaBuilder.getPrice(), 225.0D, PRICE_DIFFERENT_THAN_EXPECTED);
   }
 
   @Test(expectedExceptions = InvalidToppingCountException.class, expectedExceptionsMessageRegExp = "Too much meat")
@@ -78,9 +75,8 @@ public class PizzaBuilderTest {
     vegetables.add(Topping.GARLIC);
 
     pizzaBuilder.setToppings(vegetables);
-    Pizza pizza = pizzaBuilder.build();
 
-    Assert.assertEquals(pizza.getPrice(), 60.0, PRICE_DIFFERENT_THAN_EXPECTED);
+    Assert.assertEquals(pizzaBuilder.getPrice(), 60.0, PRICE_DIFFERENT_THAN_EXPECTED);
   }
 
   @Test(expectedExceptions = InvalidToppingCountException.class,

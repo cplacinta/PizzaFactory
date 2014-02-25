@@ -10,7 +10,7 @@ public class OrderBuilder {
     if (name == null || name.isEmpty()) {
       throw new InvalidNameException("Invalid name provided");
     }
-    return new Order(name, pizzaBuilder.build());
+    return new Order(name, pizzaBuilder.build(), pizzaBuilder.getPrice());
   }
 
   public void setName(String name) {
