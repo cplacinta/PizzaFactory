@@ -71,7 +71,6 @@ public class OrderBuilderTest {
     Assert.assertEquals(order.getPrice(), 60D, "Price is different than expected");
   }
 
-
   public void testOrderWithNameAndPizzaWithMultipleToppings() {
     OrderBuilder orderBuilder = new OrderBuilder();
     orderBuilder.setName("Ion");
@@ -88,6 +87,27 @@ public class OrderBuilderTest {
 
     Assert.assertEquals(order.getName(), "Ion", NAME_DIFFERENT_THAN_EXPECTED);
     Assert.assertEquals(order.getPrice(), 310D, "Price is different than expected");
+  }
+
+  public void testOrderIdIsRandomAndInTheExpectedRange() throws InterruptedException {
+    OrderBuilder orderBuilder = new OrderBuilder();
+    orderBuilder.setName("Ion");
+
+    PizzaBuilder pizzaBuilder = new PizzaBuilder();
+    Set<Topping> toppings = new HashSet<>();
+    toppings.add(Topping.FETA);
+    toppings.add(Topping.PROSCIUTTO);
+    toppings.add(Topping.BACON);
+    pizzaBuilder.setToppings(toppings);
+
+    orderBuilder.setPizzaBuilder(pizzaBuilder);
+    Order order1 = orderBuilder.build();
+    //Thread.sleep(1000);
+    Order order2 = orderBuilder.build();
+
+    Assert.assertTrue(order1.getId() > 99 && order1.getId() < 1000);
+    Assert.assertTrue(order2.getId() > 99 && order2.getId() < 1000);
+    Assert.assertNotEquals(order1.getId(), order2.getId(), "Order ids are the same");
   }
 
 }
