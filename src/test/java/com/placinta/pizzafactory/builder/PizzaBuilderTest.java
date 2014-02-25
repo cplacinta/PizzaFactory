@@ -22,7 +22,7 @@ public class PizzaBuilderTest {
 
   public void testBuildPizzaWithCheese() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Set<Topping> cheeses = new HashSet<Topping>();
+    Set<Topping> cheeses = new HashSet<>();
     cheeses.add(Topping.FETA);
     cheeses.add(Topping.PARMESAN);
     cheeses.add(Topping.MOZZARELLA);
@@ -36,7 +36,7 @@ public class PizzaBuilderTest {
   @Test(expectedExceptions = InvalidToppingCountException.class, expectedExceptionsMessageRegExp = "Too much cheese")
   public void testPizzaCanOnlyContainThreeCheeses() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Set<Topping> cheeses = new HashSet<Topping>();
+    Set<Topping> cheeses = new HashSet<>();
     cheeses.add(Topping.FETA);
     cheeses.add(Topping.PARMESAN);
     cheeses.add(Topping.MOZZARELLA);
@@ -47,7 +47,7 @@ public class PizzaBuilderTest {
 
   public void testBuildPizzaWithMeat() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Set<Topping> meats = new HashSet<Topping>();
+    Set<Topping> meats = new HashSet<>();
     meats.add(Topping.BACON);
     meats.add(Topping.HAM);
 
@@ -60,7 +60,7 @@ public class PizzaBuilderTest {
   @Test(expectedExceptions = InvalidToppingCountException.class, expectedExceptionsMessageRegExp = "Too much meat")
   public void testPizzaCanOnlyContainTwoMeats() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Set<Topping> meats = new HashSet<Topping>();
+    Set<Topping> meats = new HashSet<>();
     meats.add(Topping.BACON);
     meats.add(Topping.PROSCIUTTO);
     meats.add(Topping.HAM);
@@ -70,7 +70,7 @@ public class PizzaBuilderTest {
 
   public void testBuildPizzaWithVegetables() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Set<Topping> vegetables = new HashSet<Topping>();
+    Set<Topping> vegetables = new HashSet<>();
     vegetables.add(Topping.FRESH_MUSHROOMS);
     vegetables.add(Topping.SMOKED_MUSHROOMS);
     vegetables.add(Topping.RED_ONION);
@@ -87,7 +87,7 @@ public class PizzaBuilderTest {
       expectedExceptionsMessageRegExp = "Too many vegetables")
   public void testPizzaCanOnlyContainFiveVegetables() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
-    Set<Topping> vegetables = new HashSet<Topping>();
+    Set<Topping> vegetables = new HashSet<>();
     vegetables.add(Topping.FRESH_MUSHROOMS);
     vegetables.add(Topping.SMOKED_MUSHROOMS);
     vegetables.add(Topping.RED_ONION);

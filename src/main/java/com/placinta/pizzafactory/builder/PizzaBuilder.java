@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PizzaBuilder {
-  private Set<Topping> toppings = new HashSet<Topping>();
+  private Set<Topping> toppings = new HashSet<>();
   private int cheeseCounter;
   private int meatCounter;
   private int vegetablesCounter;
