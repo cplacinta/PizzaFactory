@@ -1,18 +1,13 @@
-package com.placinta.pizzafactory;
+package com.placinta.pizzafactory.builder;
 
 import com.placinta.pizzafactory.model.InvalidToppingCountException;
 import com.placinta.pizzafactory.model.Topping;
-import com.placinta.pizzafactory.builder.Pizza;
-import com.placinta.pizzafactory.builder.PizzaBuilder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Unit test for simple PizzaMaker.
- */
 @Test
 public class PizzaBuilderTest {
 
