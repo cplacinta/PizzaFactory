@@ -1,10 +1,20 @@
 package com.placinta.pizzafactory.ui;
 
+import com.placinta.pizzafactory.builder.Order;
+import com.placinta.pizzafactory.builder.OrderBuilder;
+import com.placinta.pizzafactory.builder.Pizza;
+import com.placinta.pizzafactory.builder.PizzaBuilder;
+import com.placinta.pizzafactory.model.InvalidNameException;
+import com.placinta.pizzafactory.model.InvalidToppingCountException;
+import com.placinta.pizzafactory.model.Topping;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AppWindow {
 
@@ -72,15 +82,6 @@ public class AppWindow {
     frame.getContentPane().add(btnBack);
   }
 
-  private void createTextArea() {
-    txtResult = new JTextArea();
-    txtResult.setEditable(false);
-    txtResult.setBounds(18, 66, 412, 181);
-    frame.getContentPane().add(txtResult);
-
-    txtResult.setVisible(false);
-  }
-
   private void renderCurrentPage() {
     boolean isFirstPage = currentPage == 1;
     boolean isSecondPage = currentPage == 2;
@@ -93,6 +94,68 @@ public class AppWindow {
     btnNext.setText(isThirdPage ? "Order" : "Next");
     btnNext.setEnabled(!isThirdPage);
     txtResult.setVisible(isThirdPage);
+
+    if (isThirdPage) {
+      buildOrder();
+    }
+  }
+
+  private void buildOrder() {
+    try {
+
+      PizzaBuilder pizzaBuilder = applyToppings();
+      Order order = createOrder(txtUserName.getText(), pizzaBuilder);
+      printReceipt(order, pizzaBuilder);
+
+    } catch (InvalidNameException exception) {
+      JOptionPane.showMessageDialog(frame, exception.getMessage());
+      currentPage = 1;
+      renderCurrentPage();
+    } catch (InvalidToppingCountException exception) {
+      JOptionPane.showMessageDialog(frame, exception.getMessage());
+      currentPage = 2;
+      renderCurrentPage();
+    }
+  }
+
+  private Order createOrder(String name, PizzaBuilder pizzaBuilder) {
+    OrderBuilder orderBuilder = new OrderBuilder();
+    orderBuilder.setName(name);
+    orderBuilder.setPizzaBuilder(pizzaBuilder);
+
+    return orderBuilder.build();
+  }
+
+  private PizzaBuilder applyToppings() {
+    Set<Topping> toppings = new HashSet<>();
+    for (JCheckBox checkBox : checkBoxes) {
+      if (checkBox.isSelected()) {
+        String toppingName = checkBox.getText().replace(" ", "_").toUpperCase();
+        toppings.add(Topping.valueOf(toppingName));
+      }
+    }
+    PizzaBuilder pizzaBuilder = new PizzaBuilder();
+    pizzaBuilder.setToppings(toppings);
+    return pizzaBuilder;
+  }
+
+  private void printReceipt(Order order, PizzaBuilder pizzaBuilder) {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("Order id: ");
+    stringBuilder.append(order.getId());
+    stringBuilder.append("\n");
+    stringBuilder.append("Customer name: ");
+    stringBuilder.append(order.getName());
+    stringBuilder.append("\n");
+    stringBuilder.append("Selected extra toppings:\n");
+
+    Pizza pizza = pizzaBuilder.build();
+    for (Topping topping : pizza.getToppings()) {
+      stringBuilder.append(topping.name().toLowerCase().replace("_", " "));
+      stringBuilder.append(", ");
+    }
+
+    txtResult.setText(stringBuilder.toString());
   }
 
   private void toggleCheckBoxes(boolean visible) {
@@ -115,7 +178,7 @@ public class AppWindow {
     createCheckBox("Chicken Breast", SECOND_COLUMN_X, 89);
     createCheckBox("Ham", SECOND_COLUMN_X, 116);
 
-    createCheckBox("Fresh mushroom", THIRD_COLUMN_X, 8);
+    createCheckBox("Fresh mushrooms", THIRD_COLUMN_X, 8);
     createCheckBox("Smoked mushrooms", THIRD_COLUMN_X, 35);
     createCheckBox("Red onion", THIRD_COLUMN_X, 62);
     createCheckBox("Tomatoes", THIRD_COLUMN_X, 89);
@@ -134,6 +197,15 @@ public class AppWindow {
     checkBox.setBounds(x, y, 148, 23);
     frame.getContentPane().add(checkBox);
     checkBoxes.add(checkBox);
+  }
+
+  private void createTextArea() {
+    txtResult = new JTextArea();
+    txtResult.setEditable(false);
+    txtResult.setBounds(18, 66, 412, 181);
+    frame.getContentPane().add(txtResult);
+
+    txtResult.setVisible(false);
   }
 
   public JFrame getFrame() {
