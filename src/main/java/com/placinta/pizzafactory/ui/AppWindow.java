@@ -119,10 +119,7 @@ public class AppWindow {
   }
 
   private Order createOrder(String name, PizzaBuilder pizzaBuilder) {
-    OrderBuilder orderBuilder = new OrderBuilder();
-    orderBuilder.setName(name);
-    orderBuilder.setPizzaBuilder(pizzaBuilder);
-
+    OrderBuilder orderBuilder = new OrderBuilder(name, pizzaBuilder);
     return orderBuilder.build();
   }
 

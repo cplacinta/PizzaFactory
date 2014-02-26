@@ -21,13 +21,11 @@ public class OrderBuilderTest {
   @BeforeMethod
   protected void setUp() throws Exception {
     pizzaBuilder = new PizzaBuilder();
-    orderBuilder = new OrderBuilder();
-    orderBuilder.setName("Ion");
-    orderBuilder.setPizzaBuilder(pizzaBuilder);
+    orderBuilder = new OrderBuilder("Ion", pizzaBuilder);
   }
 
   public void testBasicOrderForGeorge() {
-    orderBuilder.setName("George");
+    orderBuilder = new OrderBuilder("George", pizzaBuilder);
     Order order = orderBuilder.build();
 
     Assert.assertEquals(order.getName(), "George", NAME_DIFFERENT_THAN_EXPECTED);
@@ -41,7 +39,7 @@ public class OrderBuilderTest {
 
   @Test(expectedExceptions = InvalidNameException.class, expectedExceptionsMessageRegExp = "Invalid name provided")
   public void testBasicOrderWithNoName() {
-    orderBuilder.setName(null);
+    orderBuilder = new OrderBuilder("", pizzaBuilder);
     orderBuilder.build();
   }
 
