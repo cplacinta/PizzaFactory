@@ -23,6 +23,7 @@ public class PizzaBuilderTest {
   public void testBuildBasicPizza() {
     PizzaBuilder pizzaBuilder = new PizzaBuilder();
     Pizza pizza = pizzaBuilder.build();
+
     Assert.assertTrue(pizza.getToppings().isEmpty());
   }
 
