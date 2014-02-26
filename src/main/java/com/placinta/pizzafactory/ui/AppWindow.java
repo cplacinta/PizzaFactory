@@ -27,8 +27,9 @@ public class AppWindow {
   private JLabel lblUserName;
   private JButton btnNext;
   private JButton btnBack;
-  private JTextArea txtResult;
+  private JButton btnOrder;
 
+  private JTextArea txtResult;
   private int currentPage = 1;
   private List<JCheckBox> checkBoxes = new ArrayList<>();
 
@@ -78,8 +79,11 @@ public class AppWindow {
         renderCurrentPage();
       }
     });
-
     frame.getContentPane().add(btnBack);
+
+    btnOrder = new JButton("Order");
+    btnOrder.setBounds(253, 337, 117, 25);
+    frame.getContentPane().add(btnOrder);
   }
 
   private void renderCurrentPage() {
@@ -91,21 +95,24 @@ public class AppWindow {
     txtUserName.setVisible(isFirstPage);
     btnBack.setEnabled(!isFirstPage);
     toggleCheckBoxes(isSecondPage);
-    btnNext.setText(isThirdPage ? "Order" : "Next");
-    btnNext.setEnabled(!isThirdPage);
+    btnNext.setVisible(!isThirdPage);
+    btnOrder.setVisible(isThirdPage);
     txtResult.setVisible(isThirdPage);
 
     if (isThirdPage) {
-      buildOrder();
+      final Order order = buildOrder();
+      btnOrder.setEnabled(true);
+      btnOrder.addActionListener(getOrderButtonListeners(order));
     }
   }
 
-  private void buildOrder() {
+  private Order buildOrder() {
     try {
 
       PizzaBuilder pizzaBuilder = applyToppings();
       Order order = createOrder(txtUserName.getText(), pizzaBuilder);
       printReceipt(order, pizzaBuilder);
+      return order;
 
     } catch (InvalidNameException exception) {
       JOptionPane.showMessageDialog(frame, exception.getMessage());
@@ -115,7 +122,9 @@ public class AppWindow {
       JOptionPane.showMessageDialog(frame, exception.getMessage());
       currentPage = 2;
       renderCurrentPage();
+
     }
+    return null;
   }
 
   private Order createOrder(String name, PizzaBuilder pizzaBuilder) {
@@ -138,21 +147,31 @@ public class AppWindow {
 
   private void printReceipt(Order order, PizzaBuilder pizzaBuilder) {
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("Order id: ");
-    stringBuilder.append(order.getId());
-    stringBuilder.append("\n");
     stringBuilder.append("Customer name: ");
     stringBuilder.append(order.getName());
     stringBuilder.append("\n");
     stringBuilder.append("Selected extra toppings:\n");
-
     Pizza pizza = pizzaBuilder.build();
+
     for (Topping topping : pizza.getToppings()) {
       stringBuilder.append(topping.name().toLowerCase().replace("_", " "));
       stringBuilder.append(", ");
     }
 
+    stringBuilder.append("\nOrder total: ");
+    stringBuilder.append(order.getPrice());
     txtResult.setText(stringBuilder.toString());
+  }
+
+  private ActionListener getOrderButtonListeners(final Order order) {
+    return new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        JOptionPane.showMessageDialog(frame, "Thank you for shopping at Pizza Adriano.\nYour order number is: "
+            + order.getId());
+        btnOrder.removeActionListener(this);
+        btnOrder.setEnabled(false);
+      }
+    };
   }
 
   private void toggleCheckBoxes(boolean visible) {
